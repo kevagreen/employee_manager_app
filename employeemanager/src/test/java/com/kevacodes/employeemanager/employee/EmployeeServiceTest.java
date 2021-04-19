@@ -44,16 +44,30 @@ public class EmployeeServiceTest {
     }
     @Test
     void canGetAllEmployees(){
-    //when
-    underTest.getAllEmployees();
+        //when
+        underTest.getAllEmployees();
 
-    //then
-    verify(employeeRepository).findAll();
+        //then
+        verify(employeeRepository).findAll();
 
     }
     @Test
-    @Disabled
     void canUpdateEmployee(){
+        //given
+        Employee updatedEmployee = new  Employee("Testica", "test@email.com", "engineer", "3132000000","https://www.bootdey.com/img/Content/avatar/avatar7.png","23hhgg66");
+
+        //when
+        underTest.updateEmployee(updatedEmployee);
+
+        //then
+        ArgumentCaptor<Employee> employeeArgumentCaptor = ArgumentCaptor.forClass(Employee.class);
+        verify(employeeRepository).save(employeeArgumentCaptor.capture());
+        Employee capturedEmployee = employeeArgumentCaptor.getValue();
+        assertThat(capturedEmployee).isEqualTo(updatedEmployee);
+
+
+
+
 
     }
     @Test

@@ -77,7 +77,6 @@ public class EmployeeServiceTest {
         ArgumentCaptor<Employee> employeeArgumentCaptor = ArgumentCaptor.forClass(Employee.class);
         employeeRepository.delete(testEmployee);
         verify(employeeRepository).delete(employeeArgumentCaptor.capture());
-        System.out.println(employeeArgumentCaptor.getValue());
         Employee capturedEmployee = employeeArgumentCaptor.getValue();
         assertThat(capturedEmployee).isEqualTo(testEmployee);
 
@@ -85,6 +84,18 @@ public class EmployeeServiceTest {
     @Test
     @Disabled
     void canFindEmployeeById(){
+        //given
+        Employee testEmployee = new Employee("Testica", "test@email.com", "engineer", "3132000000","https://www.bootdey.com/img/Content/avatar/avatar7.png","23hhgg66");
+        testEmployee.setId(1L);
+        //when
+        underTest.findEmployeeById(testEmployee.getId());
+        System.out.println(testEmployee.getId());
+        //then
+        ArgumentCaptor<Employee> employeeArgumentCaptor = ArgumentCaptor.forClass(Employee.class);
+        employeeRepository.findById(testEmployee.getId());
+        verify(employeeRepository).findById(employeeArgumentCaptor.capture().getId());
+        Employee capturedEmployee = employeeArgumentCaptor.getValue();
+        assertThat(capturedEmployee).isEqualTo(testEmployee);
 
     }
 }
